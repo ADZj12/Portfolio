@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: theme('colors.void');
+    color: theme('colors.chalk');
+    font-feature-settings: 'kern';
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: theme('colors.iris');
+    color: theme('colors.void');
+  }
+
+  :focus-visible {
+    outline: 2px solid theme('colors.iris');
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-ash;
+  }
+
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .display-xl {
+    @apply font-display font-bold leading-[0.95] tracking-[-0.03em];
+    font-size: clamp(2.5rem, 7vw, 4.75rem);
+  }
+
+  .display-lg {
+    @apply font-display font-bold leading-[1] tracking-[-0.025em];
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+
+  .display-md {
+    @apply font-display font-semibold leading-[1.1] tracking-[-0.02em];
+    font-size: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .link-underline {
+    @apply relative text-chalk no-underline transition-colors duration-200;
+    background-image: linear-gradient(theme('colors.iris'), theme('colors.iris'));
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 1px;
+  }
+
+  .link-underline:hover {
+    color: theme('colors.iris');
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
