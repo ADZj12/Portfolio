@@ -14,7 +14,7 @@ export function Footer() {
 
         <div className="mt-10 flex flex-wrap items-center justify-between gap-6 border-t border-rule pt-6">
           <p className="font-mono text-xs text-ash">
-            {profile.location} · Open to {profile.seeking.toLowerCase()}
+            {profile.location} · Open to {profile.seeking}
           </p>
           <nav className="flex gap-6" aria-label="Elsewhere">
             <a
