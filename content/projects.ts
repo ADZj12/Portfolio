@@ -114,6 +114,22 @@ export const projects: Project[] = [
       repo: 'https://github.com/ADZj12',
     },
   },
+  {
+    slug: 'campus-activity-planner',
+    index: '04',
+    name: 'Campus Activity Planner',
+    year: '2026',
+    kind: 'link',
+    status: 'complete',
+    tagline:
+      'Java desktop app for browsing and registering for campus events, built on an inheritance hierarchy of activity and registration types with a Swing GUI.',
+    role: 'Coursework project',
+    context: 'Object-oriented programming, TH Aschaffenburg',
+    stack: ['Java', 'Swing', 'OOP design'],
+    links: {
+      repo: 'https://github.com/ADZj12/CampusActivityPlannerSo26',
+    },
+  },
 ];
 
 export const caseStudies = projects.filter((p) => p.kind === 'case-study');
