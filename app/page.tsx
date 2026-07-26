@@ -4,6 +4,7 @@ import { projects } from '@/content/projects';
 import { ProjectEntry } from '@/components/ProjectEntry';
 import { ExtractionFigure } from '@/components/ExtractionFigure';
 import { Reveal } from '@/components/Reveal';
+import { ContactForm } from '@/components/ContactForm';
 
 export default function HomePage() {
   return (
@@ -33,14 +34,20 @@ export default function HomePage() {
           >
             See the work
           </Link>
-          <a
+          <Link
+            href="#contact"
+            className="font-mono text-sm text-chalk transition-colors hover:text-iris"
+          >
+            Get in touch
+          </Link>
+          <Link
             href={profile.cv}
             target="_blank"
             rel="noopener noreferrer"
             className="font-mono text-sm text-chalk transition-colors hover:text-iris"
           >
             Download CV (PDF)
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -77,6 +84,21 @@ export default function HomePage() {
             </div>
           ))}
         </dl>
+      </section>
+
+      {/* Contact */}
+      <section id="contact" className="mx-auto max-w-4xl px-6 pb-24">
+        <div className="border-t border-rule pt-16">
+          <p className="eyebrow mb-5">Contact</p>
+          <h2 className="display-lg mb-6 max-w-2xl">Let&apos;s talk.</h2>
+          <p className="mb-12 max-w-prose text-ash">
+            Looking for a {profile.seeking.toLowerCase()} — but happy to hear about
+            anything. Fill in the form and it comes straight to my inbox.
+          </p>
+          <div className="max-w-2xl">
+            <ContactForm />
+          </div>
+        </div>
       </section>
     </>
   );

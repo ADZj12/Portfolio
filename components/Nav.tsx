@@ -8,6 +8,7 @@ import { profile } from '@/content/profile';
 const links = [
   { href: '/projects', label: 'Projects' },
   { href: '/about', label: 'About' },
+  { href: '/#contact', label: 'Contact' },
   { href: profile.cv, label: 'CV', external: true },
 ];
 
