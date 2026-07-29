@@ -7,14 +7,12 @@ export type Section = {
 };
 
 export type Project = {
-  /** URL segment. Only used when kind === 'case-study'. */
   slug: string;
   index: string;
   name: string;
   year: string;
   kind: ProjectKind;
   status: ProjectStatus;
-  /** One line. Shown in listings. */
   tagline: string;
   role: string;
   context: string;
@@ -23,7 +21,6 @@ export type Project = {
     live?: string;
     repo?: string;
   };
-  /** Case-study fields. Ignored for kind === 'link'. */
   problem?: string;
   approach?: string[];
   hardPart?: Section;
@@ -33,8 +30,57 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: 'getvacant',
+    slug: 'slopstop',
     index: '01',
+    name: 'slopstop',
+    year: '2026',
+    kind: 'case-study',
+    status: 'live',
+    tagline:
+      'Catches hallucinated and slopsquatted package names at the moment an AI suggests them, before they are ever installed.',
+    role: 'Solo — design, implementation, scorer calibration, MCP hook, release',
+    context: 'Independent project · published on PyPI',
+    stack: [
+      'Python',
+      'MCP',
+      'PyPI',
+      'npm',
+      'CLI',
+      'Supply-chain security',
+      'Zero runtime dependencies',
+    ],
+    links: {
+      live: 'https://pypi.org/project/slopstop/',
+      repo: 'https://github.com/ADZj12/slopstop',
+    },
+    problem:
+      'When an AI coding assistant suggests a dependency, that name is either real, hallucinated (it does not exist), or slopsquatted — an attacker has registered a name that models reliably invent. The dangerous case is the third: the same fake names recur across runs, which is exactly what makes them worth registering, and a brand-new slopsquat has no vulnerability history, so traditional scanners never see it. The strongest signal is also the cheapest — a name absent yesterday and registered today is an attack being planted in real time — but nothing was watching for it at the moment of suggestion.',
+    approach: [
+      'Check any package name against its live PyPI or npm registry and score it for the slopsquat signature, returning a verdict at the moment it is suggested rather than after install.',
+      'Run entirely on the Python standard library — a tool that defends the software supply chain must not enlarge it, so there are zero third-party runtime dependencies to trust.',
+      'Ship an MCP agent hook so packages are vetted the instant a model proposes them inside an assistant, not only later in CI.',
+      'Keep a local corpus of names previously seen as absent and run a flip monitor that re-checks them, reporting any that have since been registered.',
+      'Keep all state local: the corpus and collected names live under the user\u2019s home directory, telemetry is off by default, and nothing phones home silently.',
+    ],
+    hardPart: {
+      heading: 'A fuzzy signal that does not cry wolf',
+      body: [
+        'The flip monitor is conceptually simple — re-check names that were absent and see if any now exist. The genuinely hard problem was the scorer: turning "does this name look like something a model would fabricate" into a number that is right often enough to trust.',
+        'The naive version flagged any name whose tokens overlap real packages. That immediately flagged react-router-dom, eslint-plugin-react, and http-https as fakes, because legitimate packages reuse common tokens by convention. A checker that fires on real dependencies is worse than no checker — people learn to ignore it.',
+        'The real work was calibration against roughly 2000 real packages, plus two guards. First, suppress the conflation signal for established packages — old, many releases, a linked repository — because a genuine conflation slopsquat is fresh and hollow, not mature. Second, require a distinctive shared segment rather than a generic word like "http" before treating overlap as suspicious.',
+        'That combination brought the false-positive rate to about 0.1% across 2000 real packages while still catching the documented attacks. The discipline mattered more than the cleverness: a fuzzy signal is only useful if it stays quiet on the 99.9% of names that are fine.',
+      ],
+    },
+    outcome: [
+      'Published and installable from PyPI as v0.1.0, MIT-licensed, with zero runtime dependencies.',
+      'Working MCP agent hook, verified catching a hallucinated package live inside Claude Desktop.',
+      'Scorer calibrated against ~2000 real packages, plus deprecation detection, an advisory log, and a self-refreshing corpus loop.',
+      'Built and shipped end to end; not yet adopted.',
+    ],
+  },
+  {
+    slug: 'getvacant',
+    index: '02',
     name: 'GetVacant',
     year: '2026',
     kind: 'case-study',
@@ -72,7 +118,7 @@ export const projects: Project[] = [
         'The generation was the easy half. The hard half was getting trustworthy structured data out of real CVs, because a CV is a document designed for human eyes and actively hostile to extraction.',
         'People upload two-column layouts where the reading order in the PDF bears no relation to the visual order. They use tables with invisible borders, icons instead of section labels, and headers that say "Werdegang" or "Beruflicher Hintergrund" instead of anything predictable. Dates appear as 2020–2022, 01/2022 – 08/2022, or "seit 2024". Plenty of CVs mix German and English in the same document.',
         'A naive text extraction handles the clean single-column case and silently mangles everything else — and silent failure is the dangerous kind here. If the parser drops a job or attaches the wrong dates to the wrong employer, the generated Lebenslauf is confidently wrong, and the applicant may not notice before sending it.',
-        'What worked was refusing to trust any single pass: recover layout structure before reading text so column order survives, normalise the messy variants (date formats, section synonyms across both languages) into one internal shape, then validate the result and route low-confidence extractions to the manual form rather than guessing. The design principle I settled on was that the system should be willing to admit it could not read something. Falling back to a form is a small annoyance; a wrong work history is not.',
+        'What worked was refusing to trust any single pass: recover layout structure before reading text so column order survives, normalise the messy variants into one internal shape, then validate the result and route low-confidence extractions to the manual form rather than guessing. The principle I settled on was that the system should be willing to admit it could not read something. Falling back to a form is a small annoyance; a wrong work history is not.',
       ],
     },
     outcome: [
@@ -84,7 +130,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'cicd-security-pipeline',
-    index: '02',
+    index: '03',
     name: 'CI/CD Security Pipeline',
     year: '2026',
     kind: 'link',
@@ -100,7 +146,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'drone-network-planning',
-    index: '03',
+    index: '04',
     name: 'Drone Network Planning',
     year: '2025',
     kind: 'link',
@@ -116,7 +162,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'campus-activity-planner',
-    index: '04',
+    index: '05',
     name: 'Campus Activity Planner',
     year: '2026',
     kind: 'link',
