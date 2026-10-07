@@ -10,11 +10,11 @@ export const metadata: Metadata = {
 
 export default function ProjectsPage() {
   return (
-    <div className="mx-auto max-w-4xl px-6 py-16 sm:py-20">
+    <div className="mx-auto max-w-5xl px-6 py-16 sm:py-20">
       <header className="mb-14">
         <p className="eyebrow mb-5">Projects</p>
-        <h1 className="display-lg mb-6 max-w-2xl">
-          Everything I have built that is worth showing.
+        <h1 className="editorial editorial-lg mb-6 max-w-3xl">
+          Everything I have <span className="text-accent">built</span> that is worth showing.
         </h1>
         <p className="max-w-prose text-ash">
           Independent work first, coursework after. Where a project had a problem worth
