@@ -2,17 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Color tokens are defined as RGB channel triplets so Tailwind's
+  rgb(var(--c-x) / <alpha-value>) can apply opacity. Dark is the default;
+  light overrides under [data-theme="light"]. The token NAMES (void, chalk,
+  iris...) are kept from the original dark design so every component class
+  keeps working; only the resolved color changes per theme.
+*/
+:root,
+:root[data-theme='dark'] {
+  --c-void: 8 12 16;
+  --c-slab: 15 21 28;
+  --c-rule: 29 38 48;
+  --c-chalk: 232 237 242;
+  --c-ash: 126 139 153;
+  --c-iris: 255 90 40;
+  --c-moss: 127 209 174;
+}
+
+:root[data-theme='light'] {
+  --c-void: 250 250 248;
+  --c-slab: 255 255 255;
+  --c-rule: 223 221 214;
+  --c-chalk: 24 26 32;
+  --c-ash: 97 102 112;
+  --c-iris: 79 70 229;
+  --c-moss: 13 148 108;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    background-color: theme('colors.void');
+    transition: background-color 0.3s ease;
   }
 
   body {
-    background-color: theme('colors.void');
+    background-color: transparent;
     color: theme('colors.chalk');
     font-feature-settings: 'kern';
     text-rendering: optimizeLegibility;
+    transition: color 0.3s ease;
   }
 
   ::selection {
@@ -77,4 +108,175 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ===== Animated art backdrop ===== */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.backdrop-grid {
+  position: absolute;
+  inset: -2px;
+  background-image:
+    linear-gradient(to right, rgb(var(--c-rule) / 0.6) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--c-rule) / 0.6) 1px, transparent 1px);
+  background-size: 54px 54px;
+  mask-image: radial-gradient(ellipse 100% 80% at 50% 0%, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 100% 80% at 50% 0%, black 30%, transparent 75%);
+  opacity: 0.5;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+  will-change: transform;
+}
+
+:root[data-theme='light'] .orb {
+  opacity: 0.22;
+}
+
+.orb-1 {
+  width: 46vw;
+  height: 46vw;
+  max-width: 620px;
+  max-height: 620px;
+  top: -10vw;
+  left: -8vw;
+  background: radial-gradient(circle at 30% 30%, rgb(var(--c-iris)), transparent 70%);
+  animation: drift-1 26s ease-in-out infinite;
+}
+
+.orb-2 {
+  width: 38vw;
+  height: 38vw;
+  max-width: 520px;
+  max-height: 520px;
+  top: 20vh;
+  right: -10vw;
+  background: radial-gradient(circle at 60% 40%, rgb(var(--c-moss)), transparent 70%);
+  animation: drift-2 32s ease-in-out infinite;
+}
+
+.orb-3 {
+  width: 34vw;
+  height: 34vw;
+  max-width: 460px;
+  max-height: 460px;
+  bottom: -12vw;
+  left: 25vw;
+  background: radial-gradient(circle at 50% 50%, rgb(var(--c-iris)), transparent 70%);
+  animation: drift-3 38s ease-in-out infinite;
+}
+
+@keyframes drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(8vw, 6vh) scale(1.08); }
+  66% { transform: translate(-4vw, 10vh) scale(0.96); }
+}
+
+@keyframes drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-7vw, 8vh) scale(1.05); }
+  66% { transform: translate(-3vw, -6vh) scale(0.94); }
+}
+
+@keyframes drift-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(6vw, -8vh) scale(1.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb {
+    animation: none !important;
+  }
+}
+
+/* ===== Editorial type system ===== */
+.editorial {
+  font-family: var(--font-serif), ui-serif, Georgia, serif;
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  font-optical-sizing: auto;
+}
+
+.editorial-xl {
+  font-size: clamp(2.75rem, 9vw, 7rem);
+}
+
+.editorial-lg {
+  font-size: clamp(2rem, 6vw, 4rem);
+}
+
+/* Outlined (stroke-only) text for the fill/outline editorial mix */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgb(var(--c-chalk));
+  text-stroke: 1.5px rgb(var(--c-chalk));
+}
+
+.text-accent {
+  color: rgb(var(--c-iris));
+}
+
+/* Giant editorial index numerals */
+.numeral {
+  font-family: var(--font-serif), ui-serif, Georgia, serif;
+  font-weight: 300;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+  line-height: 0.8;
+}
+
+/* Marquee for the skills strip */
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+
+.marquee-track:hover .marquee {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    animation: none !important;
+  }
+}
+
+/* ===== Hero generative wireframe canvas ===== */
+.hero-wrap {
+  position: relative;
+}
+
+.hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  /* Fade out toward the bottom and sides so it stays subtle behind text */
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 62% 32%, black 35%, transparent 82%);
+  mask-image: radial-gradient(ellipse 90% 80% at 62% 32%, black 35%, transparent 82%);
+  opacity: 0.9;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
 }

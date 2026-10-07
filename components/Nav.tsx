@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { profile } from '@/content/profile';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 const links = [
   { href: '/projects', label: 'Projects' },
@@ -41,31 +42,35 @@ export function Nav() {
           <span className="text-iris">/</span>
         </Link>
 
-        <nav className="hidden gap-7 sm:flex" aria-label="Main">
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              target={link.external ? '_blank' : undefined}
-              rel={link.external ? 'noopener noreferrer' : undefined}
-              className={`eyebrow transition-colors hover:text-chalk ${
-                pathname.startsWith(link.href) && !link.external ? 'text-chalk' : ''
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+        <div className="flex items-center gap-6">
+          <nav className="hidden gap-7 sm:flex" aria-label="Main">
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                target={link.external ? '_blank' : undefined}
+                rel={link.external ? 'noopener noreferrer' : undefined}
+                className={`eyebrow transition-colors hover:text-chalk ${
+                  pathname.startsWith(link.href) && !link.external ? 'text-chalk' : ''
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
 
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          className="eyebrow sm:hidden hover:text-chalk transition-colors"
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-        >
-          {open ? 'Close' : 'Menu'}
-        </button>
+          <ThemeToggle />
+
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className="eyebrow sm:hidden hover:text-chalk transition-colors"
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+          >
+            {open ? 'Close' : 'Menu'}
+          </button>
+        </div>
       </div>
 
       {open && (

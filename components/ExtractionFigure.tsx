@@ -16,7 +16,7 @@ const fields = [
   { label: 'name', value: 'Abubakarr Jabbie' },
   { label: 'education', value: 'TH Aschaffenburg' },
   { label: 'skills', value: 'TypeScript · Python · Java' },
-  { label: 'languages', value: 'EN native · DE C1' },
+  { label: 'languages', value: 'EN native · DE B2' },
 ];
 
 /**
@@ -63,7 +63,7 @@ export function ExtractionFigure() {
         )}
       </div>
 
-      {/* Connector — horizontal on desktop, vertical on mobile */}
+      {/* Connector: horizontal on desktop, vertical on mobile */}
       <div
         className="flex flex-row items-center justify-center gap-2 sm:flex-col sm:gap-1.5"
         aria-hidden

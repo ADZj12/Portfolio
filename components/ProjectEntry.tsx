@@ -19,9 +19,9 @@ export function ProjectEntry({ project }: { project: Project }) {
   const href = isCaseStudy ? `/projects/${project.slug}` : project.links.repo ?? '#';
 
   return (
-    <article className="group grid gap-4 border-t border-rule py-8 sm:grid-cols-[3.5rem_1fr] sm:gap-8">
-      <div className="flex items-baseline gap-3 sm:flex-col sm:gap-1">
-        <span className="num font-mono text-2xl text-ash/50 transition-colors group-hover:text-iris sm:text-3xl">
+    <article className="group grid gap-4 border-t border-rule py-10 sm:grid-cols-[6rem_1fr] sm:gap-10">
+      <div className="flex items-baseline gap-3 sm:flex-col sm:gap-2">
+        <span className="numeral text-5xl text-ash/40 transition-colors duration-300 group-hover:text-accent sm:text-7xl">
           {project.index}
         </span>
         <span className="num eyebrow">{project.year}</span>
@@ -29,7 +29,7 @@ export function ProjectEntry({ project }: { project: Project }) {
 
       <div>
         <div className="mb-3 flex flex-wrap items-center gap-x-4 gap-y-2">
-          <h3 className="display-md">
+          <h3 className="editorial text-3xl sm:text-4xl">
             <Link
               href={href}
               target={isCaseStudy ? undefined : '_blank'}

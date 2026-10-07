@@ -27,17 +27,17 @@ export default function AboutPage() {
             {
               school: 'TH Aschaffenburg',
               detail: 'B.Sc. Software Design International',
-              years: '2024 — present',
+              years: '2024 to present',
             },
             {
               school: 'West Ukrainian National University, Ternopil',
-              detail: 'B.Sc. Software Engineering — interrupted by the war (75 ECTS)',
-              years: '2020 — 2022',
+              detail: 'B.Sc. Software Engineering (interrupted by the war, 75 ECTS)',
+              years: '2020 to 2022',
             },
             {
               school: 'Limkokwing University, Sierra Leone',
               detail: 'B.Sc. (Hons) Software Engineering with Multimedia (57 credits)',
-              years: '2018 — 2019',
+              years: '2018 to 2019',
             },
           ].map((item) => (
             <li
@@ -58,10 +58,10 @@ export default function AboutPage() {
         <h2 className="eyebrow mb-6">Languages</h2>
         <ul className="flex flex-wrap gap-x-8 gap-y-2">
           <li className="text-sm">
-            English <span className="text-ash">— native</span>
+            English <span className="text-ash">(native)</span>
           </li>
           <li className="text-sm">
-            German <span className="text-ash">— C1 (telc certified)</span>
+            German <span className="text-ash">(B2, telc certified)</span>
           </li>
         </ul>
       </section>
