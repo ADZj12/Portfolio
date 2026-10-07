@@ -98,7 +98,7 @@ export const projects: Project[] = [
       'Claude API',
       'Playwright',
       'Vercel',
-      'Render',
+      'Railway',
     ],
     links: {
       live: 'https://getvacant-web.vercel.app/',
@@ -122,7 +122,7 @@ export const projects: Project[] = [
       ],
     },
     outcome: [
-      'Live and running in production: Next.js frontend on Vercel, FastAPI backend on Render.',
+      'Live and running in production: Next.js frontend on Vercel, FastAPI backend on Railway.',
       'Used by friends applying for real Werkstudent and Praktikum positions; their feedback drove most of the parsing and scoring changes after the first version.',
       'The no-storage decision turned out to simplify everything downstream: no accounts, no database, no data-retention questions to answer.',
       'Still in active development: the scraping coverage and the match scoring are where the remaining work is.',
