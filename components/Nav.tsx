@@ -27,12 +27,17 @@ export function Nav() {
       if (e.key === 'Escape') setOpen(false);
     };
     document.addEventListener('keydown', onKey);
-    document.body.style.overflow = 'hidden';
     return () => {
       document.removeEventListener('keydown', onKey);
-      document.body.style.overflow = '';
     };
   }, [open]);
+
+  // Safety net: if an earlier version left the body scroll-locked, clear it.
+  useEffect(() => {
+    if (document.body.style.overflow === 'hidden') {
+      document.body.style.overflow = '';
+    }
+  }, []);
 
   return (
     <header className="sticky top-0 z-40 border-b border-rule bg-void/85 backdrop-blur-md">
